@@ -2,6 +2,13 @@
 import { useEmployeeStore } from "@/stores/employee";
 
 const employeeStore = useEmployeeStore();
+
+const statuses = [
+  { label: 'All Status', value: 'all' },
+  { label: 'Active', value: 'active' },
+  { label: 'On Vacation', value: 'vacation' },
+  { label: 'Inactive', value: 'inactive' },
+]
 </script>
 <template>
   <div>
@@ -30,30 +37,11 @@ const employeeStore = useEmployeeStore();
     </div>
 
     <div class="filters">
-      <button @click="employeeStore.setStatusFilter('all')" :class="[
-        'filter-btn',
-        { active: employeeStore.statusFilter === 'all' },
-      ]">
-        All Status
-      </button>
-      <button @click="employeeStore.setStatusFilter('active')" :class="[
-        'filter-btn',
-        { active: employeeStore.statusFilter === 'active' },
-      ]">
-        Active
-      </button>
-      <button @click="employeeStore.setStatusFilter('vacation')" :class="[
-        'filter-btn',
-        { active: employeeStore.statusFilter === 'vacation' },
-      ]">
-        On Vacation
-      </button>
-      <button @click="employeeStore.setStatusFilter('inactive')" :class="[
-        'filter-btn',
-        { active: employeeStore.statusFilter === 'inactive' },
-      ]">
-        Inactive
-      </button>
+      <button v-for="status in statuses" :key="status.value" @click="employeeStore.setStatusFilter(status.value)"
+        :class="[
+          'filter-btn',
+          { active: employeeStore.statusFilter === status.value },
+        ]">{{ status.label }}</button>
     </div>
   </div>
 </template>
